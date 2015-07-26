@@ -1,23 +1,19 @@
 schemajs.getFactory().registerField({
-	type: 'UInt8',
+	type: 'Flag',
 
-	options: {
-		defaultValue: undefined,
-	},
-
-	init: function(options) {
-		this.value = options.defaultValue;
+	init: function() {
+		this.value = false;
 	},
 
 	fromBuffer: function(buffer) {
-		this.value = buffer.readU8();
+		this.value = true;
 	},
 
 	toJSON: function() {
 		return this.value;
 	},
-
+	
 	valueOf: function() {
 		return this.value;
-	},
+	},	
 });

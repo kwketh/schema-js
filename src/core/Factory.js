@@ -25,6 +25,14 @@
 				throw new Error('field ' + type + ' has not been registered');
 			}
 			options || (options = {});
+			var baseOptions = classInstance.prototype.options;
+			if (baseOptions) {
+				for (var key in baseOptions) {
+					if (options[key] === undefined) {
+						options[key] = baseOptions[key];
+					}
+				}
+			}
 			return new classInstance(options);
 		},
 	});

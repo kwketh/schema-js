@@ -1,11 +1,14 @@
 (function() {
-	var Class = function() {};
-	Class.prototype.init = function() {};
+	var Class = function() { };
+	Class.prototype.init = function() { };
 	Class.prototype.type = 'Class';
 	Class.extend = function(definition) {
 		var classDef = function() {
-			if (arguments[0] !== Class) { 
-				this.init.apply(this, arguments); 
+			if (arguments[0] !== Class) {
+				if (this.init.$) {
+					this.init.$.init.apply(this, arguments);
+				}
+				this.init.apply(this, arguments);
 			}
 		};
 		var prototype = new this(Class);
@@ -21,6 +24,9 @@
 			}
 			prototype[n] = item;
 		}
+		if (definition.classInit) {
+			definition.classInit.call(prototype);
+		}		
 		classDef.prototype = prototype;
 		classDef.extend = this.extend;
 		return classDef;

@@ -33,6 +33,10 @@ define(function() {
 
 		var baseFields = [
 			'schemajs/fields/Buffer',
+			'schemajs/fields/Group',
+			'schemajs/fields/Array',
+			'schemajs/fields/UInt32',
+			'schemajs/fields/UInt16',
 			'schemajs/fields/UInt8'
 		];
 

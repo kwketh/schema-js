@@ -1,5 +1,5 @@
 schemajs.getFactory().registerField({
-	type: 'UInt8',
+	type: 'UInt16',
 
 	options: {
 		defaultValue: undefined,
@@ -10,14 +10,14 @@ schemajs.getFactory().registerField({
 	},
 
 	fromBuffer: function(buffer) {
-		this.value = buffer.readU8();
+		this.value = buffer.readU16();
 	},
 
 	toJSON: function() {
 		return this.value;
 	},
-
+	
 	valueOf: function() {
 		return this.value;
-	},
+	},	
 });
