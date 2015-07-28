@@ -34,6 +34,11 @@ schemajs.getFactory().registerField({
 		}
 	},
 
+	peakU8: function() {
+		var value = this.buffer[this.offset];
+		return value;
+	},
+
 	readU8: function() {
 		this.assertSpace(1);
 		var value = this.buffer[this.offset];

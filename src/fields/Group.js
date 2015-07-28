@@ -15,6 +15,16 @@ schemajs.getFactory().registerField({
 		return Object.keys(this._fields).length > 0;
 	},
 
+	isSet: function() {
+		for (var key in this._fields) {
+			var field = this._fields[key];
+			if (!field.isSet()) {
+				return false;
+			}
+		}
+		return true;
+	},
+
 	fromBuffer: function(buffer) {
 		if (!this.hasFields()) {
 			console.warn('unserializing array with no fields');

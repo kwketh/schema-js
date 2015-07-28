@@ -9,6 +9,10 @@ schemajs.getFactory().registerField({
 		this.value = options.defaultValue;
 	},
 
+	isSet: function(){
+		return this.value !== undefined;
+	},
+	
 	fromBuffer: function(buffer) {
 		this.value = buffer.readU32();
 	},
