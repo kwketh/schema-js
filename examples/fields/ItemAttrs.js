@@ -4,41 +4,42 @@ schemajs.getFactory().registerField({
 	extends: 'Group',
 	fields: [
 		{id: 'ground',          internalId: 0,   type: 'UInt16'},
-		{id: 'fullGround',      internalId: 30,  type: 'Flag'},		
+		{id: 'fullGround',      internalId: 31,  type: 'Flag'},		
 		{id: 'groundBorder',    internalId: 1,   type: 'Flag'},
 		{id: 'onBottom',        internalId: 2,   type: 'Flag'},
 		{id: 'onTop',           internalId: 3,   type: 'Flag'},
 		{id: 'container',       internalId: 4,   type: 'Flag'},
-		{id: 'fluidContainer',  internalId: 10,  type: 'Flag'},
-		{id: 'useable',         internalId: 34,  type: 'Flag'},
+		{id: 'fluidContainer',  internalId: 11,  type: 'Flag'},
+		{id: 'useable',         internalId: 35,  type: 'Flag'},
 		{id: 'stackable',       internalId: 5,   type: 'Flag'},
-		{id: 'writable',        internalId: 8,   type: 'UInt16'},
-		{id: 'writableOnce',    internalId: 9,   type: 'UInt16'},
-		{id: 'pickupable',      internalId: 16,  type: 'Flag'},
-		{id: 'notPathable',     internalId: 15,  type: 'Flag'},
-		{id: 'hangable',        internalId: 17,  type: 'Flag'},
-		{id: 'rotatable',       internalId: 20,  type: 'Flag'},
-		{id: 'dontHide',        internalId: 22,  type: 'Flag'},
-		{id: 'translucent',     internalId: 23,  type: 'Flag'},
-		{id: 'hookSouth',       internalId: 18,  type: 'Flag'},
-		{id: 'hookEast',        internalId: 19,  type: 'Flag'},		
+		{id: 'writableFlag',    internalId: 8,   type: 'Flag'},
+		{id: 'writable',        internalId: 9,   type: 'UInt16'},
+		{id: 'writableOnce',    internalId: 10,  type: 'UInt16'},
+		{id: 'pickupable',      internalId: 17,  type: 'Flag'},
+		{id: 'notPathable',     internalId: 16,  type: 'Flag'},
+		{id: 'hangable',        internalId: 18,  type: 'Flag'},
+		{id: 'rotatable',       internalId: 21,  type: 'Flag'},
+		{id: 'dontHide',        internalId: 23,  type: 'Flag'},
+		{id: 'translucent',     internalId: 24,  type: 'Flag'},
+		{id: 'hookSouth',       internalId: 19,  type: 'Flag'},
+		{id: 'hookEast',        internalId: 20,  type: 'Flag'},		
 		{id: 'forceUse',        internalId: 6,   type: 'Flag'},
 		{id: 'multiUse',        internalId: 7,   type: 'Flag'},
-		{id: 'lyingCorpse',     internalId: 26,  type: 'Flag'},
-		{id: 'animateAlways',   internalId: 27,  type: 'Flag'},
-		{id: 'splash',          internalId: 11,  type: 'Flag'},
-		{id: 'notWalkable',     internalId: 12,  type: 'Flag'},
-		{id: 'notMoveable',     internalId: 13,  type: 'Flag'},
-		{id: 'blockProjectile', internalId: 14,  type: 'Flag'},
-		{id: 'minimapColor',    internalId: 28,  type: 'UInt16'},
-		{id: 'cloth',           internalId: 32,  type: 'UInt16'},
-		{id: 'lensHelp',        internalId: 29,  type: 'UInt16'},
-		{id: 'lightIntensity',  internalId: 21,  type: 'UInt16'},
-		{id: 'lightColor',      internalId: 21,  type: 'UInt16'},
-		{id: 'elevation',       internalId: 25,  type: 'UInt16'},
-		{id: 'look',            internalId: 31,  type: 'Flag'},
-		{id: 'market',          internalId: 33,  type: 'Flag'},
-		{id: 'displacement',    internalId: 24,  type: 'Group', options: { 
+		{id: 'lyingCorpse',     internalId: 27,  type: 'Flag'},
+		{id: 'animateAlways',   internalId: 28,  type: 'Flag'},
+		{id: 'splash',          internalId: 12,  type: 'Flag'},
+		{id: 'notWalkable',     internalId: 13,  type: 'Flag'},
+		{id: 'notMoveable',     internalId: 14,  type: 'Flag'},
+		{id: 'blockProjectile', internalId: 15,  type: 'Flag'},
+		{id: 'minimapColor',    internalId: 29,  type: 'UInt16'},
+		{id: 'cloth',           internalId: 33,  type: 'UInt16'},
+		{id: 'lensHelp',        internalId: 30,  type: 'UInt16'},
+		{id: 'lightIntensity',  internalId: 22,  type: 'UInt16'},
+		{id: 'lightColor',      internalId: 22,  type: 'UInt16'},
+		{id: 'elevation',       internalId: 26,  type: 'UInt16'},
+		{id: 'look',            internalId: 32,  type: 'Flag'},
+		{id: 'market',          internalId: 34,  type: 'Flag'},
+		{id: 'displacement',    internalId: 25,  type: 'Group', options: { 
 			fields: [
 				{id: 'x', type: 'UInt16'},
 				{id: 'y', type: 'UInt16'},
@@ -95,16 +96,7 @@ schemajs.getFactory().registerField({
 				break;
 			}			
 			/* Backwards compatibility patch */
-			if (attr == ThingAttrWritable) {
-				this.attrs.push(ThingAttrWritableFlag);
-				continue;
-			} 
-			else if (attr > ThingAttrWritable) {
-				this.attrs.push(attr);
-				attr = attr - 1;				
-			} else {
-				this.attrs.push(attr);
-			}
+			this.attrs.push(attr);
 			this.loadAttribute(attr, buffer);			
 		}
 		assert(success, 'failed to load ItemAttrs');
@@ -112,16 +104,7 @@ schemajs.getFactory().registerField({
 
 	toBuffer: function(buffer) {
 		this.attrs.forEach(function(attr) {
-			if (attr == ThingAttrWritableFlag) {
-				buffer.writeU8(ThingAttrWritable);
-				return;
-			}
-			else if (attr > ThingAttrWritable) {
-				buffer.writeU8(attr);
-				attr = attr - 1;
-			} else {
-				buffer.writeU8(attr);
-			}
+			buffer.writeU8(attr);
 			this.saveAttribute(attr, buffer);
 		}, this);
 		buffer.writeU8(ThingLastAttr);
