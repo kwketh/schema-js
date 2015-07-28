@@ -13,9 +13,17 @@ schemajs.getFactory().registerField({
 		this.value = buffer.readU32();
 	},
 
+	toBuffer: function(buffer) {
+		buffer.writeU32(this.value);
+	},	
+
 	toJSON: function() {
 		return this.value;
 	},
+
+	fromJSON: function(value) {
+		this.value = value;	
+	},	
 	
 	valueOf: function() {
 		return this.value;

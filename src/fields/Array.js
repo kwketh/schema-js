@@ -38,11 +38,18 @@ schemajs.getFactory().registerField({
 		return this._items;
 	},
 
+	fromJSON: function(json) {
+		resize(json.length);
+		json.forEach(function(item, index) {
+			item.fromJSON(json[index]);
+		});
+	},
+
 	toJSON: function() {
-		return this.toArray().map(function(item) {
+		return this._items.map(function(item) {
 			return item.toJSON();
 		});
-	},	
+	},
 
 	fromBuffer: function(buffer) {
 		if (this.length == 0) {
@@ -52,4 +59,13 @@ schemajs.getFactory().registerField({
 			item.fromBuffer(buffer);
 		}, this);
 	},
+
+	toBuffer: function(buffer) {
+		if (this.length == 0) {
+			console.warn('serializing array with zero length');
+		}
+		this._items.forEach(function(item) {
+			item.toBuffer(buffer);
+		}, this);
+	},	
 });

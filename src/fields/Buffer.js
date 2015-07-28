@@ -7,6 +7,7 @@ schemajs.getFactory().registerField({
 	},
 
 	init: function(options) {
+		this.length = options.length;
 		this.buffer = new Uint8Array(this.length);
 		this.offset = 0;
 	},
@@ -72,6 +73,41 @@ schemajs.getFactory().registerField({
 		}
 		this.offset += 4;
 		return value;
+	},	
+
+	writeU8: function(value) {
+		this.assertSpace(1);
+		this.buffer[this.offset] = value;
+		this.offset += 1;
+	},
+
+	writeU16: function(value) {
+		this.assertSpace(2);
+		if (this.options.isBigEndian) {
+			this.buffer[this.offset] = (value & 0xff00) >>> 8;
+			this.buffer[this.offset + 1] = value & 0x00ff;
+		} else {			
+			this.buffer[this.offset] = value & 0x00ff;
+			this.buffer[this.offset + 1] = (value & 0xff00) >>> 8;
+		}
+		this.offset += 2;
+	},
+
+	writeU32: function(value) {
+		this.assertSpace(4);
+		var offset = this.offset;
+		if (this.options.isBigEndian) {
+            this.buffer[offset] = (value >>> 24) & 0xff;
+            this.buffer[offset + 1] = (value >>> 16) & 0xff;
+            this.buffer[offset + 2] = (value >>> 8) & 0xff;
+            this.buffer[offset + 3] = value & 0xff;
+		} else {			
+            this.buffer[offset + 3] = (value >>> 24) & 0xff;
+            this.buffer[offset + 2] = (value >>> 16) & 0xff;
+            this.buffer[offset + 1] = (value >>> 8) & 0xff;
+            this.buffer[offset] = value & 0xff;
+		}
+		this.offset += 4;
 	},	
 
 	rewind: function() {

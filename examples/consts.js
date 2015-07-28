@@ -16,6 +16,7 @@ ThingAttrStackable = 5;
 ThingAttrForceUse = 6;
 ThingAttrMultiUse = 7;
 ThingAttrWritable = 8;
+ThingAttrWritableFlag = 1008;
 ThingAttrWritableOnce = 9;
 ThingAttrFluidContainer = 10;
 ThingAttrSplash = 11;
