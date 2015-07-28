@@ -45,20 +45,44 @@ schemajs.getFactory().registerField({
 		});
 
 		var categories = categoryData.toArray();
-		categories.forEach(function(category, categoryId) {			
-			var items = category.toArray();			
-			items.forEach(function(item, id) {
-				if (categoryId == ThingCategoryItem && id < 100) {
-					return;					
-				} else if (categoryId != ThingCategoryCreature && id < 1) {
-					return;
-				}
+		categories.forEach(function(category, categoryId) {						
+			var firstId = 1;
+			if (categoryId == ThingCategoryItem) {
+				firstId = 100;
+			} 
+			else if (categoryId == ThingCategoryCreature) {
+				firstId = 0;
+			}
+			var items = category.toArray();
+			for (var id = firstId; id < items.length; id++) {
+				var item = items[id];
 				item.id = id;
 				item.category = categoryId;
 				item.fromBuffer(buffer);
-			});
+			};
 		});
-		
-		assert(buffer.offset == 249344, 'offset mismatch');
+	},
+
+	toBuffer: function(buffer) {
+		this.lookup('signature').toBuffer(buffer);
+		this.lookup('categorySize').toBuffer(buffer);
+		var categoryData = this.lookup('categoryData');
+		var categories = categoryData.toArray();
+		categories.forEach(function(category, categoryId) {						
+			var firstId = 1;
+			if (categoryId == ThingCategoryItem) {
+				firstId = 100;
+			} 
+			else if (categoryId == ThingCategoryCreature) {
+				firstId = 0;
+			}
+			var items = category.toArray();
+			for (var id = firstId; id < items.length; id++) {
+				var item = items[id];
+				item.id = id;
+				item.category = categoryId;
+				item.toBuffer(buffer);
+			};
+		});
 	},
 });

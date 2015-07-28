@@ -82,4 +82,17 @@ schemajs.getFactory().registerField({
 		this.lookup('spriteIds').resize(totalSprites);
 		this.lookup('spriteIds').fromBuffer(buffer);
 	},
+
+	toBuffer: function(buffer) {
+		this.lookup('attrs').toBuffer(buffer);
+		this.lookup('width').toBuffer(buffer);
+		this.lookup('height').toBuffer(buffer);
+		if (this.getArea() > 1) {
+			this.lookup('size').toBuffer(buffer);
+		}
+		this.lookup('layers').toBuffer(buffer);
+		this.lookup('patterns').toBuffer(buffer);
+		this.lookup('animationPhases').toBuffer(buffer);
+		this.lookup('spriteIds').toBuffer(buffer);
+	},	
 });
