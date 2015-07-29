@@ -29,7 +29,7 @@ schemajs.getFactory().registerField({
 	},	
 
 	assertSpace: function(bytes) {
-		if (this.offset + bytes >= this.getLength()) {
+		if (this.offset + bytes > this.getLength()) {
 			throw new Error('Buffer read is out of range');
 		}
 	},
