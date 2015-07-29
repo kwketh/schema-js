@@ -16,8 +16,8 @@ schemajs.getFactory().registerField({
 	toBuffer: function(buffer) {
 	},
 
-	fromJSON: function() {
-		this.value = true;
+	fromJSON: function(value) {
+		this.value = value;
 	},
 
 	toJSON: function() {

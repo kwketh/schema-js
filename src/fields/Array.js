@@ -16,6 +16,10 @@ schemajs.getFactory().registerField({
 		this.resize(this.length);
 	},
 
+	isSet: function() {
+		return true;
+	},
+
 	at: function(index) {
 		if (index >= this.length) {
 			throw new Error('access out of bounds in Field.Array');
@@ -39,10 +43,11 @@ schemajs.getFactory().registerField({
 	},
 
 	fromJSON: function(json) {
-		resize(json.length);
+		this.resize(json.length);
 		json.forEach(function(item, index) {
-			item.fromJSON(json[index]);
-		});
+			var field = this.at(index);
+			field.fromJSON(item);
+		}, this);
 	},
 
 	toJSON: function() {

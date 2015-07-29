@@ -18,11 +18,11 @@ schemajs.getFactory().registerField({
 	isSet: function() {
 		for (var key in this._fields) {
 			var field = this._fields[key];
-			if (!field.isSet()) {
-				return false;
+			if (field.isSet()) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	},
 
 	fromBuffer: function(buffer) {
@@ -48,13 +48,17 @@ schemajs.getFactory().registerField({
 	toJSON: function() {
 		var json = {};
 		for (var key in this._fields) {
-			json[key] = this._fields[key].toJSON();
+			var field = this._fields[key];
+			if (field.isSet()) {
+				json[key] = field.toJSON();
+			}
 		}
 		return json;
 	},
 
 	fromJSON: function(json) {
 		for (var key in json) {
+			var value = json[key];
 			this._fields[key].fromJSON(value);
 		}
 	},	
