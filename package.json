@@ -1,0 +1,18 @@
+{
+  "name": "oni-js",
+  "version": "0.0.1",
+  "description": "MVC Framework",
+  "author": "Konrad Wieczorek <keth@kwketh.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kwketh/oni-js.git"
+  },
+  "dependencies": {
+    "uglify-js": "2.4.24",
+    "watch": "0.16.0"
+  },
+  "keywords": [
+    "mvc"
+  ],
+  "license": "MIT"
+}
