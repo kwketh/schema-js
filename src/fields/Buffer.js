@@ -28,6 +28,14 @@ schemajs.getFactory().registerField({
 		xhr.send();
 	},	
 
+	trim: function() {
+		this.buffer = this.buffer.subarray(0, this.offset);
+	},
+
+	createBlob: function() {
+		return new Blob([this.buffer], {type: 'application/octet-binary'});
+	},
+
 	assertSpace: function(bytes) {
 		if (this.offset + bytes > this.getLength()) {
 			throw new Error('Buffer read is out of range');
