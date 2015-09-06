@@ -3,27 +3,21 @@
 	Class.prototype.init = function() { };
 	Class.prototype.type = 'Class';
 	Class.extend = function(definition) {
-		var classDef = function() {
+		var classDef = function(options) {
 			if (arguments[0] !== Class) {
-				if (this.init.$) {
-					this.init.$.init.apply(this, arguments);
+				if (this.super) {
+					this.super.init.call(this, options);
 				}
-				this.init.apply(this, arguments);
+				this.init.call(this, options);
 			}
 		};
 		var prototype = new this(Class);
 		var superClass = this.prototype;
-		this.prototype.super = function() {
-			var caller = arguments.callee.caller;
-			return caller.arguments.callee.$;
-		};
 		for (var n in definition) {
 			var item = definition[n];
-			if (item instanceof Function) {
-				item.$ = superClass;
-			}
 			prototype[n] = item;
 		}
+		prototype.super = superClass;
 		if (definition.classInit) {
 			definition.classInit.call(prototype);
 		}		
