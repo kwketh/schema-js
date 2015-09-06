@@ -45,7 +45,9 @@ define(function() {
 		/* Load core files, then all fields and components at the same time */
 		requireGroups([
 			['schemajs/init'],
-			['schemajs/utils/Class', 'schemajs/core/Factory', 'schemajs/core/Field'],
+			['schemajs/utils/Class'],
+			['schemajs/core/Factory'],
+			['schemajs/core/Field'],
 			loadFields
 		], function() {
 			callback();
