@@ -28,13 +28,13 @@ schemajs.getFactory().registerField({
 	},
 
 	resize: function(length) {
-		var options = this.options;
+		var itemType = this.options.itemType;
+		var itemOptions = this.options.itemOptions;
 		var factory = schemajs.getFactory();
 		this.length = length;
-		this._items = this._items.slice(0, this.length);
-		while (this._items.length < this.length) {
-			var field = factory.createField(options.itemType, options.itemOptions);		
-			this._items.push(field);
+		this._items = this._items.slice(0, length);
+		for (var i = this._items.length; i < length; i++) {
+			this._items[i] = factory.createField(itemType, itemOptions);
 		}
 	},
 	
@@ -43,34 +43,44 @@ schemajs.getFactory().registerField({
 	},
 
 	fromJSON: function(json) {
-		this.resize(json.length);
-		json.forEach(function(item, index) {
-			var field = this.at(index);
-			field.fromJSON(item);
-		}, this);
+		this.resize(length);
+		var length = this.length;
+		for (var i = 0; i < length; i++) {
+			var field = this._items[index];
+			var value = json[i];
+			field.fromJSON(value);
+		}
 	},
 
 	toJSON: function() {
-		return this._items.map(function(item) {
-			return item.toJSON();
-		});
+		var items = this._items;
+		var length = this.length;
+		var json = [];
+		for (var i = 0; i < length; i++) {
+			json[i] = items[i].toJSON();
+		}
+		return json;
 	},
 
 	fromBuffer: function(buffer) {
 		if (this.length == 0) {
 			console.warn('unserializing array with zero length');
 		}
-		this._items.forEach(function(item) {
-			item.fromBuffer(buffer);
-		}, this);
+		var items = this._items;
+		var length = items.length;
+		for (var i = 0; i < length; i++) {
+			items[i].fromBuffer(buffer);
+		}
 	},
 
 	toBuffer: function(buffer) {
 		if (this.length == 0) {
 			console.warn('serializing array with zero length');
 		}
-		this._items.forEach(function(item) {
-			item.toBuffer(buffer);
-		}, this);
+		var items = this._items;
+		var length = items.length;
+		for (var i = 0; i < length; i++) {
+			items[i].toBuffer(buffer);
+		}
 	},	
 });

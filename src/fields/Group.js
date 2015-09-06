@@ -4,6 +4,7 @@ schemajs.getFactory().registerField({
 
 	init: function(options) {
 		var fields = options.fields || this.fields;
+		this.factory = schemajs.getFactory();
 		this._createFields(fields);
 	},
 
@@ -67,12 +68,11 @@ schemajs.getFactory().registerField({
 		return this._fields;
 	},
 
-	_createField: function(fieldSchema) {
-		var factory = schemajs.getFactory();
+	_createField: function(fieldSchema) {		
 		if (this.lookup(fieldSchema.id)) {
 			throw new Error('duplicate field id `' + fieldSchema.id + '` in Group');
 		}
-		this._fields[fieldSchema.id] = factory.createField(fieldSchema.type, fieldSchema.options);
+		this._fields[fieldSchema.id] = this.factory.createField(fieldSchema.type, fieldSchema.options);
 	},
 
 	_createFields: function(allFields) {
