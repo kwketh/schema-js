@@ -43,10 +43,10 @@ schemajs.getFactory().registerField({
 	},
 
 	fromJSON: function(json) {
-		this.resize(length);
+		this.resize(json.length);
 		var length = this.length;
 		for (var i = 0; i < length; i++) {
-			var field = this._items[index];
+			var field = this._items[i];
 			var value = json[i];
 			field.fromJSON(value);
 		}
