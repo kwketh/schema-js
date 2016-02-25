@@ -30,6 +30,7 @@ schemajs.getFactory().registerField({
 
 	trim: function() {
 		this.buffer = this.buffer.subarray(0, this.offset);
+		this.length = this.offset;
 	},
 
 	createBlob: function() {
